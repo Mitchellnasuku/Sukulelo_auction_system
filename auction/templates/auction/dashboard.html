@@ -1,0 +1,110 @@
+{% extends 'auction/main.html' %}
+
+{% block content %}
+
+
+<br>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Total Users:</h5>
+            <hr>
+            <h1 style="text-align: center;padding: 10 px">{{total_users}}</h1>
+        </div>
+    </div>
+
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Total Items:</h5>
+            <hr>
+            <h1 style="text-align: center;padding: 10 px">{{total_items}}</h1>
+        </div>
+    </div>
+
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Total Bids Placed:</h5>
+            <hr>
+            <h1 style="text-align: center;padding: 10 px">{{total_bids}}</h1>
+        </div>
+    </div>
+</div>
+<br>
+
+<hr>
+
+<div class="row">
+    <div class="col-md-4">
+        <h5>USERS:</h5>
+        <hr>
+        <div class="card card-body">
+            <a class="btn btn primary  btn-sm btn-block" href="{% url 'create_user'%}" id="currency-btn">Create User</a>
+            <br>
+            <table class="table table-hover table-sm">
+                <tr class="bg-warning">
+                    <th>First Name</th>
+                    <th>Last Name</th>
+                    <th>Phone</th>     
+                    <th></th>     
+                </tr>
+                {% for user in user %}
+                <tr>
+                    <td>{{user.first_name }}</td>
+                    <td><strong>{{user.last_name}}</strong></td>
+                    <td>{{user.phone}}</td>
+                    <td><a class="btn btn-sm btn-danger" href="/view_user/{{user.id}}">View</a></td>
+                </tr>
+                {% endfor %}
+            </table>
+        </div>
+    </div>
+
+    <div class="col-md-8">
+        <h5>BIDS:</h5>
+        <hr>
+        <div class="card card-body">
+            <a class="btn btn primary  btn-sm btn-block" href="{% url 'create_bid'%}" id="currency-btn2">Create Bid</a>
+            <br>
+            <table class="table table-hover table-sm">
+                <tr class="bg-warning">
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Offer</th>
+                    <th>Status</th>
+                    <th>Bidder</th>
+                    <th>Date Placed</th>
+                    <th></th>
+                </tr>
+                {% for bid in bid %}
+                <tr>
+                    <td>{{bid.item}}</td>
+                    <td>{{bid.item.category }}</td>
+                    <td><strong>{{bid.item.price}}</strong></td>
+                    <td><strong>{{bid.offer}}</strong></td>
+                    <td>{{bid.status}}</td>
+                    <td>{{bid.user}}</td>
+                    <td>{{bid.date_placed}}</td>
+                    <td>
+                        <a class="btn btn-sm btn-info" href="/update_bid/{{bid.id}}">Update</a>
+                        <a onclick="checker()" class="btn btn-sm btn-danger" href="/delete_bid/{{bid.id}}">Delete</a>
+                    </td>
+                 </tr>
+                 {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+</div>
+<script>
+    function checker(){
+        var result = confirm('Are you sure you want to delete bid?');
+        if (result == false){
+            event.preventDefault();
+        }
+    }
+</script>
+
+{% endblock %}

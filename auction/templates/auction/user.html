@@ -1,0 +1,146 @@
+{% extends 'auction/main.html' %}
+
+{% block content %}
+
+<br>
+
+<div class="row">
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>{{user.first_name}} {{user.last_name}}</h5>
+            <hr>
+            <a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'update_user' user.id %}">Update User</a>
+            <hr>
+            <a onclick="checker2()" class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'delete_user' user.id %}">Delete User</a>
+        </div>
+    </div>
+
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Contact Information:</h5>
+            <hr>
+            <p>Email: {{user.email}} </p>
+            <p>Phone: {{user.phone}}</p>
+        </div>
+    </div>
+
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Total Bids Placed By {{user.first_name}}:</h5>
+            <hr>
+            <h1 style="text-align: center;padding: 10 px">{{bid_count}}</h1>
+        </div>
+    </div>
+    
+    <div class="col-md">
+        <div class="card card-body">
+            <h5>Total Bids Won By {{user.first_name}}:</h5>
+            <hr>
+            <h1 style="text-align: center;padding: 10 px">{{paid_bids}}</h1>
+        </div>
+    </div>
+</div>
+
+<br>
+<div class="row">
+    <div class="col">
+        <div class="card card-body">
+
+            <form method="get">
+                {{myFilter.form}}
+                <button type="submit" class="btn btn-primary">Search</button>
+            </form>
+
+        </div>
+    </div>
+</div>
+<br>
+
+<div class="row"></div>
+    <div class="col-md">
+        <hr>
+        <div class="card card-body">
+            <br>
+            <table class="table table-hover table-sm">
+                <tr class="bg-warning">
+                    <th>Item Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Offer</th>
+                    <th>Bid Status</th>
+                    <th>Payment Status</th>
+                    <th>Date Placed</th>
+                    <th></th>
+                </tr>
+                {% for bid in bid %}
+                <tr>
+                    <td>{{bid.item}}</td>
+                    <td>{{bid.item.category }}</td>
+                    <td><strong>{{bid.item.price}}</strong></td>
+                    <td><strong>{{bid.offer}}</strong></td>
+                    <td>{{bid.status}}</td>
+                    <td>{{bid.payment_status}}</td>
+                    <td>{{bid.date_placed}}</td>
+                    <td>
+                        <a class="btn btn-sm btn-info" href="{% url 'update_bid' bid.id %}">Update</a>
+                        <a onclick="displayMessages()" class="btn btn-sm btn-success" href="{% url 'make_payment' bid.id %}">Make Payment</a>
+                        <a onclick="checker()" class="btn btn-sm btn-danger" href="{% url 'delete_bid' bid.id %}">Delete</a>
+                    </td>
+                 </tr>
+                 {% endfor %}
+            </table>
+        </div>
+    </div>
+</div>
+
+{% for message in messages %}
+    <input type="hidden" id="message" value="{{ message|safe }}">
+{% endfor %}
+<script>
+    function checker(){
+        var result = confirm('Are you sure you want to delete bid?');
+        if (result == false){
+            event.preventDefault();
+        }
+    }
+
+    function update_user(){
+        var result = confirm('Are you sure you want to update bid?');
+        if (result == false){
+            event.preventDefault();
+        }
+    }
+
+    function update_bid(){
+        var result = confirm('Are you sure you want to update bid?');
+        if (result == false){
+            event.preventDefault();
+        }
+    }
+
+    function checker2(){
+        var result = confirm('Are you sure you want to delete user?');
+        if (result == false){
+            event.preventDefault();
+        }
+    }
+
+    function checker3(){
+        var result = confirm('Are you sure you want to make payment?');
+        if (result == false){
+            event.preventDefault();
+        }
+    }
+
+    function displayMessages() {
+        var messageInput = document.getElementById("message");
+        if (messageInput) {
+            var message = messageInput.value;
+            if (message) {
+                alert(message);
+            }
+        }
+    }
+</script>
+
+{% endblock %}
