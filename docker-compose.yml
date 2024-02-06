@@ -2,26 +2,16 @@ version: '3'
 
 services:
   web:
-    build: 
-      context: .
-    image: "mitchell"
+    build: .
+    image: mitchellimage
     ports:
       - "8000:8000"
     volumes:
       - ./auction_system:/usr/src/app
     depends_on:
-      - db
+      - postgres
 
-  db:
-    image: "sqlite-container"
-    ports:
-      - "5432:5432" 
-    volumes:
-      - ./auction_system/db.sqlite3:/usr/src/app/db.sqlite3
-
-
-
-
-         
-
+  postgres:
+    image: postgres
+    command: /bin/sh -c "while true; do echo Hello from Mitchell  Container; sleep 1500; done"
 
