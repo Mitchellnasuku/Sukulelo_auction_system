@@ -2,16 +2,36 @@ version: '3'
 
 services:
   web:
-    build: .
-    image: mitchellimage
+    build: 
+      context: .
+      dockerfile: Dockerfile
     ports:
       - "8000:8000"
     volumes:
       - ./auction_system:/usr/src/app
-    depends_on:
-      - postgres
+    environment:
+      - POSTGRES_DB=SukuleloDatabase
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=Dockerproject1
+      - POSTGRES_HOST=db
+    networks:
+      - mitchellnetwork
 
-  postgres:
-    image: postgres
-    command: /bin/sh -c "while true; do echo Hello from Mitchell  Container; sleep 1500; done"
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: SukuleloDatabase
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Dockerproject1
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - mitchellnetwork
 
+volumes:
+  postgres_data:
+
+networks:
+  mitchellnetwork:

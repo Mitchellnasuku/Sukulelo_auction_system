@@ -87,7 +87,7 @@ WSGI_APPLICATION = 'auction_system.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-
+'''
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
@@ -99,18 +99,18 @@ DATABASES = {
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'postgres',
+        'NAME': 'SukuleloDatabase',
         'USER': 'postgres',
         'PASSWORD': 'Dockerproject1',
-        'HOST': '172.22.0.2',  
+       # 'HOST': '172.22.0. 2',  
        # 'HOST': 'localhost', 
-      # 'HOST': 'db',
+      'HOST': 'db',
         'PORT': '5432',  
         
 
     }
 }
-'''
+
 
 
 
